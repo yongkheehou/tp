@@ -7,7 +7,6 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -23,8 +22,8 @@ public class Person {
 
     // Data fields
     private final Address address;
-    private final Remark remark;
     private final Set<Tag> tags = new HashSet<>();
+    private final Remark remark;
 
     /**
      * Every field must be present and not null.
@@ -47,16 +46,16 @@ public class Person {
         return phone;
     }
 
+    public Remark getRemark() {
+        return remark;
+    }
+
     public Email getEmail() {
         return email;
     }
 
     public Address getAddress() {
         return address;
-    }
-
-    public Remark getRemark() {
-        return remark;
     }
 
     /**
@@ -111,13 +110,18 @@ public class Person {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
-                .add("name", name)
-                .add("phone", phone)
-                .add("email", email)
-                .add("address", address)
-                .add(" Remark: ", getRemark())
-                .add("tags", tags)
-                .toString();
+        final StringBuilder builder = new StringBuilder();
+        builder.append(getName())
+                .append(" Phone: ")
+                .append(getPhone())
+                .append(" Email: ")
+                .append(getEmail())
+                .append(" Address: ")
+                .append(getAddress())
+                .append(" Remark: ")
+                .append(getRemark())
+                .append(" Tags: ");
+        getTags().forEach(builder::append);
+        return builder.toString();
     }
 }
