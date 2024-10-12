@@ -3,7 +3,6 @@ package seedu.address.ui;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
 
@@ -33,7 +32,6 @@ public class ClientCardTest extends ApplicationTest {
     }
 
     @Test
-    @Tag("gui")
     public void display_correctlyInitializesUi() {
         // Verify that the client card's UI components are displaying the correct information
         Label idLabel = (Label) clientCard.getRoot().lookup("#id");
@@ -48,7 +46,6 @@ public class ClientCardTest extends ApplicationTest {
     }
 
     @Test
-    @Tag("gui")
     public void testCardPaneInitialized() {
         // Verify that the HBox cardPane is not null and is part of the UI
         HBox cardPane = (HBox) clientCard.getRoot().lookup("#cardPane");
@@ -56,7 +53,6 @@ public class ClientCardTest extends ApplicationTest {
     }
 
     @Test
-    @Tag("gui")
     public void testClientCardWithDifferentClient() {
         Client anotherClient = new ClientBuilder().withName("Bob").withPhone("98765432")
                 .withEmail("bob@example.com").buildBuyer();

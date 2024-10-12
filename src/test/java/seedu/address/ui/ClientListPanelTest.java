@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
 import org.testfx.util.WaitForAsyncUtils;
@@ -42,7 +41,6 @@ public class ClientListPanelTest extends ApplicationTest {
     }
 
     @Test
-    @Tag("gui")
     public void clientListView_initialized_correctly() {
         // Get access to the ListView directly and check its contents
         ListView<Client> clientListView = clientListPanel.getClientListView();
@@ -53,7 +51,6 @@ public class ClientListPanelTest extends ApplicationTest {
     }
 
     @Test
-    @Tag("gui")
     public void clientListViewCell_updateItem_setsCorrectGraphics() throws Exception {
         ClientListPanel.ClientListViewCell cell = clientListPanel.new ClientListViewCell();
         Client alice = new ClientBuilder().withName("Alice").buildBuyer();
@@ -80,7 +77,6 @@ public class ClientListPanelTest extends ApplicationTest {
     }
 
     @Test
-    @Tag("gui")
     public void clientListViewCell_updateItem_whenEmpty() {
         ClientListPanel.ClientListViewCell cell = clientListPanel.new ClientListViewCell();
 
@@ -91,7 +87,6 @@ public class ClientListPanelTest extends ApplicationTest {
     }
 
     @Test
-    @Tag("gui")
     public void clientListViewCell_updateItem_whenClientNotEmpty() {
         ClientListPanel.ClientListViewCell cell = clientListPanel.new ClientListViewCell();
         Buyer bob = new ClientBuilder().withName("Bob").buildBuyer();
