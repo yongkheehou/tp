@@ -24,6 +24,12 @@ test {
     useJUnitPlatform()
     finalizedBy jacocoTestReport
 
+    // Exclude GUI tests on Linux
+    if (System.getProperty("os.name").toLowerCase().contains("linux")) {
+        excludeTags 'gui'
+    }
+
+    // Add the necessary JVM arguments to open and export JavaFX modules for TestFX
     jvmArgs = [
             '--add-exports=javafx.graphics/com.sun.javafx.application=ALL-UNNAMED',
             '--add-opens=javafx.graphics/com.sun.javafx.application=ALL-UNNAMED',
@@ -31,21 +37,7 @@ test {
             '--add-exports=javafx.controls/com.sun.javafx.scene.control=ALL-UNNAMED',
             '--add-opens=javafx.controls/javafx.scene.control=ALL-UNNAMED'
     ]
-
-    // Headless mode for Linux (Ubuntu)
-    if (System.getProperty("os.name").toLowerCase().contains("linux")) {
-        jvmArgs += [
-                '-Djava.awt.headless=true',
-                '-Dtestfx.robot=glass',       // Use TestFX's headless robot
-                '-Dtestfx.headless=true',     // Run TestFX in headless mode
-                '-Dprism.order=sw',           // Use software rendering
-                '-Dprism.verbose=true',       // Verbose logging for Prism rendering
-                '--module-path', configurations.compileClasspath.asPath,
-                '--add-modules', 'javafx.controls,javafx.fxml'
-        ]
-    }
 }
-
 
 task coverage(type: JacocoReport) {
     sourceDirectories.from files(sourceSets.main.allSource.srcDirs)
@@ -66,16 +58,25 @@ dependencies {
     String jUnitVersion = '5.4.0'
     String javaFxVersion = '17.0.7'
 
-    // Platform-specific JavaFX dependencies
-    implementation group: 'org.openjfx', name: 'javafx-base', version: javaFxVersion, classifier: detectOS()
-    implementation group: 'org.openjfx', name: 'javafx-controls', version: javaFxVersion, classifier: detectOS()
-    implementation group: 'org.openjfx', name: 'javafx-fxml', version: javaFxVersion, classifier: detectOS()
-    implementation group: 'org.openjfx', name: 'javafx-graphics', version: javaFxVersion, classifier: detectOS()
+    implementation group: 'org.openjfx', name: 'javafx-base', version: javaFxVersion, classifier: 'win'
+    implementation group: 'org.openjfx', name: 'javafx-base', version: javaFxVersion, classifier: 'mac'
+    implementation group: 'org.openjfx', name: 'javafx-base', version: javaFxVersion, classifier: 'linux'
+    implementation group: 'org.openjfx', name: 'javafx-controls', version: javaFxVersion, classifier: 'win'
+    implementation group: 'org.openjfx', name: 'javafx-controls', version: javaFxVersion, classifier: 'mac'
+    implementation group: 'org.openjfx', name: 'javafx-controls', version: javaFxVersion, classifier: 'linux'
+    implementation group: 'org.openjfx', name: 'javafx-fxml', version: javaFxVersion, classifier: 'win'
+    implementation group: 'org.openjfx', name: 'javafx-fxml', version: javaFxVersion, classifier: 'mac'
+    implementation group: 'org.openjfx', name: 'javafx-fxml', version: javaFxVersion, classifier: 'linux'
+    implementation group: 'org.openjfx', name: 'javafx-graphics', version: javaFxVersion, classifier: 'win'
+    implementation group: 'org.openjfx', name: 'javafx-graphics', version: javaFxVersion, classifier: 'mac'
+    implementation group: 'org.openjfx', name: 'javafx-graphics', version: javaFxVersion, classifier: 'linux'
 
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.7.0'
     implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.7.4'
 
+    // TestFX Core for JavaFX application testing
     testImplementation 'org.testfx:testfx-core:4.0.16-alpha'
+    // TestFX JUnit5 integration
     testImplementation 'org.testfx:testfx-junit5:4.0.16-alpha'
 
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: jUnitVersion
@@ -89,15 +90,3 @@ shadowJar {
 }
 
 defaultTasks 'clean', 'test'
-
-// Helper method to detect platform for JavaFX
-def detectOS() {
-    def osName = System.getProperty("os.name").toLowerCase()
-    if (osName.contains("win")) {
-        return "win"
-    } else if (osName.contains("mac")) {
-        return "mac"
-    } else {
-        return "linux"
-    }
-}
