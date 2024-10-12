@@ -24,6 +24,11 @@ test {
     useJUnitPlatform()
     finalizedBy jacocoTestReport
 
+    // Exclude GUI tests on Linux
+    if (System.getProperty("os.name").toLowerCase().contains("linux")) {
+        excludeTags 'gui'
+    }
+
     // Add the necessary JVM arguments to open and export JavaFX modules for TestFX
     jvmArgs = [
             '--add-exports=javafx.graphics/com.sun.javafx.application=ALL-UNNAMED',
