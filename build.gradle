@@ -39,10 +39,13 @@ test {
                 '-Dtestfx.robot=glass',       // Use TestFX's headless robot
                 '-Dtestfx.headless=true',     // Run TestFX in headless mode
                 '-Dprism.order=sw',           // Use software rendering
-                '-Dprism.verbose=true'        // Verbose logging for Prism rendering
+                '-Dprism.verbose=true',       // Verbose logging for Prism rendering
+                '--module-path', configurations.compileClasspath.asPath,
+                '--add-modules', 'javafx.controls,javafx.fxml'
         ]
     }
 }
+
 
 task coverage(type: JacocoReport) {
     sourceDirectories.from files(sourceSets.main.allSource.srcDirs)
