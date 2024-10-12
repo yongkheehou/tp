@@ -20,6 +20,7 @@ public class ClientListPanel extends UiPart<Region> {
     @FXML
     private ListView<Client> clientListView;
 
+
     /**
      * Creates a {@code PersonListPanel} with the given {@code ObservableList}.
      */
@@ -46,4 +47,7 @@ public class ClientListPanel extends UiPart<Region> {
         }
     }
 
+    public ListView<Client> getClientListView() {
+        return this.clientListView;
+    }
 }

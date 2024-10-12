@@ -34,6 +34,7 @@ public class ClientCard extends UiPart<Region> {
     @FXML
     private Label email;
 
+
     /**
      * Creates a {@code PersonCode} with the given {@code Person} and index to display.
      */
@@ -44,5 +45,9 @@ public class ClientCard extends UiPart<Region> {
         name.setText(client.getName().fullName);
         phone.setText(client.getPhone().value);
         email.setText(client.getEmail().value);
+    }
+
+    public HBox getCardPane() {
+        return this.cardPane;
     }
 }
